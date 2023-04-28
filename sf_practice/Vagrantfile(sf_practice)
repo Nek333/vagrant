@@ -1,0 +1,35 @@
+Vagrant.configure("2") do |config|
+
+  # Vagrant box - образ ОС из которой
+  # будет создана виртуальная машина.
+  # Список образов на https://app.vagrantup.com/boxes/search
+  config.vm.box = "ubuntu/bionic64"
+  config.vm.box_download_insecure=true
+  config.vm.box_check_update = false
+
+  
+  # Настройки виртуальной машины
+  config.vm.provider "virtualbox" do |vb|
+    # Показывать или нет интерфейс VirtualBox при загрузке.
+    vb.gui = false
+	# Выделяемая память для виртуалки.
+	vb.memory = "1024"
+	# Название в интерфейсе VirtualBox.
+	vb.name = "vagrant_test3"
+	 
+    # Сценарий настройки виртуальной машины
+  config.vm.provision "shell", inline: <<-SHELL
+
+
+
+    sudo apt-get update
+    sudo apt-get -y install python3-pip 
+    # Установка библиотеки psycopg2
+    sudo -H pip3 install psycopg2-binary
+    # Установка фреймворка Django
+    sudo -H pip3 install Django
+	
+    SHELL
+  end  
+
+end
